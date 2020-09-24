@@ -51,7 +51,7 @@ require_once('../services/userService.php');
 
                         <h4><b><?= $posts[$i]['post_title'] ?></b></h4>
                         <p><?= $posts[$i]['user_name'] ?></p>
-                        <a href="./guest_postdetails.php?postid=<?= $posts[$i]['post_id'] ?>" class="myButton">Details</a>
+                        <a href="guest_postdetails.php?postid=<?= $posts[$i]['post_id'] ?>" class="myButton">Details</a>
 
 
                     </div>

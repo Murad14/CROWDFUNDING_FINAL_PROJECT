@@ -1,43 +1,20 @@
 <?php
-
-require_once('../php/sessionController.php');
 require_once('../services/postService.php');
 require_once('../services/userService.php');
 require_once('../services/commentService.php');
-require_once('../php/cookieController.php');
-
-$user = getByEmail($_SESSION['email']);
-$a    = $user['user_id'];
 
 $posts = getpostByid($_GET['postid']);
-$_SESSION['post_id'] = $_GET['postid'];
-// $_SESSION['raiser_id']=$posts['user_id'];
-$user = getByEmail($_SESSION['email']);
-
-
-
-
-$cmnt = getAllComments($_SESSION['post_id']);
-$mycmnt = getCommentById($a, $_SESSION['post_id']);
-
-
-
+$cmnt = getAllComments($_GET['postid']);
 ?>
-
 
 <!DOCTYPE html>
 <html>
+   <head>
+     <link rel="stylesheet" href="./assets/donor/css/style.css">
 
-<head>
-    <link rel="stylesheet" href="./assets/donor/css/style.css">
+     <title>Post Details</title>
 
-
-    <title>Dashboard</title>
-
-
-
-
-</head>
+   </head>
 
 <body>
 
@@ -53,8 +30,6 @@ $mycmnt = getCommentById($a, $_SESSION['post_id']);
         </nav>
     </section>
 
-
-
     <section class="postdescription">
 
         <div class="cardpost postdes">
@@ -65,35 +40,8 @@ $mycmnt = getCommentById($a, $_SESSION['post_id']);
                 <?= $posts['post_details'] ?>
             </p>
             <p>posted by : <?= $posts['user_name'] ?></p>
-
-
             <hr>
-            Add Comment:
-            <form action="../php/commentController.php" method="post">
-                <input type="text" name="comment" required>
-                <input type="hidden" name="pid" value="<?php echo $_GET['postid'] ?>">
-                <input type="hidden" name="uid" value="<?php echo $user['user_id'] ?>">
-                <input type="hidden" name="name" value="<?php echo $user['fullname'] ?>">
-                <button type="submit" name="submit">comment</button>
-
-
-            </form>
             <br>
-
-            My Comments:
-            <?php for ($i = 0; $i != count($mycmnt); $i++) { ?>
-
-                <p><b>Name: <?= $mycmnt[$i]['name'] ?></b></p>
-                <p> <?= $mycmnt[$i]['comment'] ?></p>
-                <a href="../php/commentController.php?cid=<?= $mycmnt[$i]['comment_id'] ?>">Delete</a>
-                <hr>
-
-
-
-            <?php } ?>
-
-            <hr>
-
 
             Recent Comments:
             <?php for ($i = 0; $i != count($cmnt); $i++) { ?>
@@ -102,13 +50,9 @@ $mycmnt = getCommentById($a, $_SESSION['post_id']);
                 <p> <?= $cmnt[$i]['comment'] ?></p>
                 <hr>
 
-
-
             <?php } ?>
 
         </div>
-
-
 
         <div class="carddonate">
             <form action="../php/paymentController.php" method="post">
@@ -118,21 +62,18 @@ $mycmnt = getCommentById($a, $_SESSION['post_id']);
                 <center>
                     <input type="text" class="tb5" name="donation"> <br><br>
 
-                    <a href="registration.php" class="myButton">Donate</a>
+                    <a onclick="myFunction()" href="registration.php" class="myButton">Donate</a>
                     <h3>Amount got :<?= $posts['getamount'] ?></h3>
                     <h3>Amount Wants:<?= $posts['post_amount'] ?></h3>
                 </center>
             </form>
-
         </div>
 
-
-
-
     </section>
-
-
-
+<script type="text/javascript">
+  function myFunction(){
+    alert("Please Registration First");
+  }
+</script>
 </body>
-
 </html>
